@@ -1,18 +1,16 @@
 // inisialisasi
-const modal = document.getElementById('exampleModal');
-
+const containerModal = document.getElementsByClassName('container-modal')[0];
+const modalContent = document.getElementsByClassName('modal-content')[0];
 // tombol tambah
 const tombolTambah = document.getElementsByClassName('tombol-tambah')[0];
 tombolTambah.addEventListener('click', function() {
-  modal.innerHTML = `
-  <div class="modal-dialog">
-  <div class="modal-content">
+  modalContent.innerHTML = `
+  <form action="" method="POST" enctype="multipart/form-data">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-     <form action="" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="nama" class="form-label">Nama</label>
           <input type="text" class="form-control" id="nama" name="nama" required>
@@ -29,12 +27,11 @@ tombolTambah.addEventListener('click', function() {
           <label for="jurusan" class="form-label">Jurusan</label>
           <input type="text" class="form-control" id="jurusan" name="jurusan" required>
         </div>
-         <div class="edit-gambar"></div>
-         <div class="mb-3">
+        <div class="update-gambar"></div>
+        <div class="mb-3">
           <label for="gambar" class="form-label">Gambar</label>
           <input type="file" class="form-control" id="gambar" name="gambar" required>
         </div>
-     
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -46,23 +43,21 @@ tombolTambah.addEventListener('click', function() {
           Simpan Data Mahasiswa
         </button>
       </div>
-    </form>
-  </div>
-</div>`;
+    </form>`;
 
 });
 
 
 
-// tombol edit
-const tombolEdit = document.querySelectorAll('button.edit');
-tombolEdit.forEach(edit => {
-  edit.addEventListener('click', function() {
+// tombol update
+const tombolupdate = document.querySelectorAll('button.update');
+tombolupdate.forEach(update => {
+  update.addEventListener('click', function() {
     const dataId = this.dataset.id;
-    fetch(`http://localhost/mahasiswa/ajax-edit.php/${dataId}`)
+    fetch(`http://localhost/mahasiswa/ajax-update.php/${dataId}`)
       .then(response => response.text())
-      .then(response => {
-        modal.innerHTML = response;
+      .then(responseHTML => {
+        modalContent.innerHTML = responseHTML;
       });
   });
 });

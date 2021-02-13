@@ -8,6 +8,8 @@ if (isset($_POST['tambah'])) {
   $notification = $_SESSION['hapus'];
   session_unset();
   session_destroy();
+} else if(isset($_POST['update'])) {
+  $notification = update($_POST, $_FILES);
 }
 $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
 ?>
@@ -81,8 +83,8 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
           <th scope="row"><?= $i++; ?></th>
           <!-- tombol aksi -->
           <td>
-          <!-- edit data -->
-            <button type="button" class="btn btn-sm btn-primary edit" data-id="<?= $mhs['id']; ?>" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <!-- update data -->
+            <button type="button" class="btn btn-sm btn-primary update" data-id="<?= $mhs['id']; ?>" data-bs-toggle="modal" data-bs-target="#exampleModal">
               <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#fff">
                 <path d="M0 0h24v24H0z" fill="none"/>
                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
@@ -128,62 +130,62 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal fade" id="exampleModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <!-- form -->
+            <form action="" method="POST" enctype="multipart/form-data">
+                <!-- nama -->
+                <div class="mb-3">
+                  <label for="nama" class="form-label">Nama</label>
+                  <input type="text" class="form-control" id="nama" name="nama" required>
+                </div>
+                <!-- nrp -->
+                <div class="mb-3">
+                  <label for="nrp" class="form-label">Nrp</label>
+                  <input type="number" class="form-control" id="nrp" name="nrp" required>
+                </div>
+                <!-- email -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <!-- jurusan -->
+                <div class="mb-3">
+                  <label for="jurusan" class="form-label">Jurusan</label>
+                  <input type="text" class="form-control" id="jurusan" name="jurusan" required>
+                </div>
+                <!-- gambar -->
+                <div class="update-gambar"></div>
+                <div class="mb-3">
+                  <label for="gambar" class="form-label">Gambar</label>
+                  <input type="file" class="form-control" id="gambar" name="gambar" required>
+                </div>
+            
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" name="tambah" class="btn btn-primary" id="tombol-submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="#fff">
+                    <path d="M0 0h24v24H0z"fill="none"/>
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+                  </svg>
+                  Simpan Data Mahasiswa
+                </button>
+              </div>
+            </form>
           </div>
-          <div class="modal-body">
-           <!-- form -->
-           <form action="" method="POST" enctype="multipart/form-data">
-              <!-- nama -->
-              <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama" required>
-              </div>
-              <!-- nrp -->
-              <div class="mb-3">
-                <label for="nrp" class="form-label">Nrp</label>
-                <input type="number" class="form-control" id="nrp" name="nrp" required>
-              </div>
-              <!-- email -->
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-              </div>
-              <!-- jurusan -->
-              <div class="mb-3">
-                <label for="jurusan" class="form-label">Jurusan</label>
-                <input type="text" class="form-control" id="jurusan" name="jurusan" required>
-              </div>
-               <!-- gambar -->
-               <div class="edit-gambar"></div>
-               <div class="mb-3">
-                <label for="gambar" class="form-label">Gambar</label>
-                <input type="file" class="form-control" id="gambar" name="gambar" required>
-              </div>
-           
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-              <button type="submit" name="tambah" class="btn btn-primary" id="tombol-submit">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="#fff">
-                  <path d="M0 0h24v24H0z"fill="none"/>
-                  <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
-                </svg>
-                Simpan Data Mahasiswa
-              </button>
-            </div>
-          </form>
         </div>
       </div>
-    </div>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <!-- ajax -->
     <script src="index.js"></script>
+    <!--  Bootstrap 5 beta -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
   </body>
 </html>
