@@ -3,7 +3,6 @@
 function koneksi() {
   return mysqli_connect('localhost', 'root', '', 'phpdasar');
 }
-
 function filter($input) {
   return htmlspecialchars(mysqli_escape_string(koneksi(), $input));
 }
@@ -41,19 +40,17 @@ function tambah($post = [], $uploadGambar = []) {
       $nrp = filter($post['nrp']);
       $email = filter($post['email']);
       $jurusan = filter($post['jurusan']);
-      $gambar = filter($name);
       $namaFileBaru = uniqid();
       $namaFileBaru .= '.';
       $namaFileBaru .= $ekstensi;
-      var_dump($uploadGambar);
-      var_dump(move_uploaded_file($tmp_name, "upload-gambar/" . $name)); die;
+      $gambar = filter($namaFileBaru);
+      move_uploaded_file($tmp_name, 'upload-gambar/' . $namaFileBaru);
       $query = "INSERT INTO `mahasiswa` VALUES (NULL, '$nama', '$nrp', '$email', '$jurusan', '$gambar')";
-      query($query);
-      $status = mysqli_affected_rows(koneksi());
-      if ($status > -1) {
-        return 'Data Mahasiswa Berhasil ditambahkan';
+      $statusQuery = query($query);
+      if ($statusQuery) {
+        return "Data Mahasiswa <b>$nama</b> Berhasil ditambahkan";
       }
-      return 'Data Mahasiswa Gagal ditambahkan';
+      return "Data Mahasiswa <b>$nama</b> Gagal ditambahkan";
     }
   }
 }
@@ -66,5 +63,12 @@ function verifyEmail($email) {
     
 }
 function redirect($url) {
-  header('location: ' . $url .'.php');
+  header('location: http://localhost/mahasiswa/' . $url .'.php');
+}
+
+function hapusFileGambar($target) {
+  if (file_exists($target)) {
+    return unlink($target);
+  }
+  redirect('index');
 }
