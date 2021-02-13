@@ -49,15 +49,28 @@ tombolTambah.addEventListener('click', function() {
 
 
 
-// tombol update
-const tombolupdate = document.querySelectorAll('button.update');
-tombolupdate.forEach(update => {
-  update.addEventListener('click', function() {
-    const dataId = this.dataset.id;
+// tombol update -> menggunakan event mouse
+const tombolupdate = document.addEventListener('click', event => {
+  const dataId = event.target.dataset.id;
+  if (dataId) {
     fetch(`http://localhost/mahasiswa/ajax-update.php/${dataId}`)
       .then(response => response.text())
+      .catch(error => console.log(error))
       .then(responseHTML => {
         modalContent.innerHTML = responseHTML;
       });
-  });
+  }
+});
+
+// cari data
+
+const inputSearch = document.getElementsByClassName('search')[0];
+const tbody = document.getElementsByTagName('tbody')[0];
+inputSearch.addEventListener('keyup', function() {
+  const cariData = inputSearch.value;
+  fetch('http://localhost/mahasiswa/ajax-cari.php/' + cariData)
+    .then(response => response.text())
+    .then(response => {
+      tbody.innerHTML = response;
+    });
 });
