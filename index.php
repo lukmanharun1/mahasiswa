@@ -29,7 +29,7 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
     <title>Halaman Admin</title>
   </head>
   <body>
-    <h1 class="text-center mt-3">DataMahasiswa</h1>
+    <h1 class="text-center mt-3">Data Mahasiswa</h1>
     <div class="mx-3">
       <div class="row">
         <div class="col-md-3">
