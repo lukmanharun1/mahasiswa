@@ -1,12 +1,43 @@
 <?php 
+session_start();
 require_once 'functions.php';
+$uri = $_SERVER['REQUEST_URI'];
+$logout = filter(explode('/', $uri)[3]);
+// logout
+if ($logout === 'logout') {
+  session_unset();
+  session_destroy();
+  setcookie('remember-me', '');
+  setcookie('username', '');
+  setcookie('password', '');
+  redirect('login');
+} else if ($logout !== '') {
+  redirect('login');
+}
 if (isset($_POST['login'])) {
   $login = login($_POST);
+  if (isset($login['status'])) {
+    $tujuhHari = time() + 60 * 60 * 24 * 7;
+        if ($_POST['remember-me']) {
+        setcookie('remember-me', $login['password'], $tujuhHari);
+        echo 'ok';
+      }
+      setcookie('username', $login['username'], $tujuhHari);
+    $message = $login['message'];
+    $_SESSION['auth'] = true;
     echo "<script>
-            alert('$login');
+            alert('$message');
             document.location.href = 'index.php';
           </script>";
+    echo $message;
+  } else {
+    echo "<script>
+            alert('$login');
+          </script>";
+  }
 }
+$username = $_SESSION['username'];
+$password = $_SESSION['password'];
 ?>
 
 <!doctype html>
@@ -34,7 +65,14 @@ if (isset($_POST['login'])) {
         <!-- username -->
         <label for="Username" class="form-label">Username </label>
         <div class="mb-3 position-relative">
-          <input type="text" class="form-control input-icon" id="Username" name="username" required>
+          <input 
+            type="text" 
+            class="form-control input-icon" 
+            id="Username" 
+            name="username" 
+            required 
+            value="<?= $username ? $username: ''; ?>"
+          />
           <!-- icon person -->
           <div class="icon-input">
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="rgb(13 110 253)">
@@ -46,7 +84,14 @@ if (isset($_POST['login'])) {
         <!-- password -->
         <label for="password" class="form-label">Password</label>
         <div class="mb-3 position-relative">
-          <input type="password" class="form-control input-icon" id="password" name="password" required>
+          <input 
+            type="password" 
+            class="form-control input-icon" 
+            id="password" 
+            name="password" 
+            required 
+            value="<?= $password ? $password: ''; ?>"
+          />
           <div class="icon-input">
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="rgb(13 110 253)">
               <path d="M0 0h24v24H0z" fill="none"/>

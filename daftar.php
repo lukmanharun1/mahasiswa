@@ -1,11 +1,21 @@
 <?php 
+session_start();
 require_once 'functions.php';
 if (isset($_POST['daftar'])) {
   $daftar = daftar($_POST);
+  if (isset($daftar['status'])) {
+    $message = $daftar['message'];
+    $_SESSION['username'] = $daftar['username'];
+    $_SESSION['password'] = $daftar['password'];
+    echo "<script>
+            alert('$message');
+            document.location.href = 'login.php';
+          </script>";
+  } else {
     echo "<script>
             alert('$daftar');
-            document.location.href = 'index.php';
           </script>";
+  }
 }
 ?>
 

@@ -7,9 +7,9 @@
 
 .icon-search {
   position: absolute;
-  top: 6.4rem;
-  left: 17.3rem; 
   z-index: 2;
+  top: 7px;
+  right: 8%;
 }
 
 div.notification {

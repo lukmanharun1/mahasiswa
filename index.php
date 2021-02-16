@@ -1,6 +1,22 @@
 <?php 
 session_start();
 require_once 'functions.php';
+// session auth 
+if (!$_SESSION['auth']) {
+  redirect('login');
+  exit;
+} else if (isset($_COOKIE['remember-me']) && isset($_COOKIE['username'])) {
+  // verifikasi remember me
+  $password = filter($_COOKIE['remember-me']);
+  $username = filter($_COOKIE['username']);
+  $query = "SELECT `username`, `password` FROM `user` WHERE `username` = '$username'";
+  $result = getQuery($query)[0];
+  if ($result['username'] !== $username && $result['password'] !== $password) {
+    redirect('login');
+    exit;
+  }
+
+}
 $i = 1;
 if (isset($_POST['tambah'])) {
   $notification = tambah($_POST, $_FILES);
@@ -33,25 +49,36 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
     <div class="mx-3">
       <div class="row">
         <div class="col-md-3">
-        <button type="button" class="btn btn-primary mt-4 mb-3 tombol-tambah" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 0 24 24" width="28" fill="#fff">
-          <path d="M0 0h24v24H0z" fill="none"/>
-          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-        </svg>
-          Tambah Data Mahasiswa
-        </button>
-        <!-- icon search -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" class="icon-search">
-          <path fill="#0d6efd" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
-          </path>
-        </svg>
-          <input 
-            type="text" 
-            class="form-control mb-4 search" 
-            name="cari" 
-            autocomplete="off" 
-            placeholder="Cari Data Mahasiswa"
-          />
+          <div class="user">
+            <!-- icon person -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" width="25" fill="rgb(13 110 253)">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            Selamat Datang, <b class="text-primary"><?= $username ? $username : '' ?> &nbsp;</b>
+            <a href="login.php/logout" class="text-danger">Logout</a>
+          </div>
+          <button type="button" class="btn btn-primary mt-4 mb-3 tombol-tambah" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 0 24 24" width="28" fill="#fff">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+            Tambah Data Mahasiswa
+          </button>
+          <div class="cari-data position-relative">
+            <input 
+              type="text" 
+              class="form-control mb-4 search" 
+              name="cari" 
+              autocomplete="off" 
+              placeholder="Cari Data Mahasiswa"
+            />
+            <!-- icon search -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" class="icon-search">
+              <path fill="#0d6efd" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+              </path>
+            </svg>
+          </div>
         </div>
       </div>
     </div>

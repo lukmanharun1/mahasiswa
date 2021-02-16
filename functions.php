@@ -147,22 +147,30 @@ function update($post, $uploadGambar = []) {
 function daftar($post) {
   if (!isset($post['username']) && !isset($post['password']) && !isset($post['konfirmasi-password'])) {
     return 'Pastikan Semua Data Wajib diisi';
+  } else if ($post['username'] < 6) {
+    return 'Username terlalu pendek!';
   } else if ($post['password'] !== $post['konfirmasi-password']) {
     return 'Pastikan password dengan konfirmasi password harus sama';
   } else if (strlen($post['password']) < 6) {
     return 'Password terlalu pendek!';
-  }
+  } 
   $username = filter($post['username']);
   $password = password_hash(filter($post['password']), PASSWORD_DEFAULT);
   $query = "SELECT `username` FROM `user` WHERE username = '$username'";
-  $getUser = getQuery($query)[0];
-  if ($getUser) {
+  $statusUser = getQuery($query);
+  if ($statusUser) {
     return 'username sudah terdaftar!';
   } else {
     $query = "INSERT INTO `user` VALUES (NULL, '$username', '$password')";
     $statusQuery = query($query);
     if ($statusQuery) {
-      return 'selamat anda berhasil daftar';
+      return [
+                'status' => 'success',
+                'message' => 'selamat anda berhasil daftar',
+                'username' => $username,
+                // password input (plaint text)
+                'password' => filter($post['password'])
+            ];
     }
     return 'maaf data gagal mohon coba lagi';
   }
@@ -171,7 +179,7 @@ function daftar($post) {
 function login($post) {
   if (!isset($post['username']) && !isset($post['password'])) {
     return 'pastikan semua data wajib diisi';
-  }
+  } 
   $username = filter($post['username']);
   $password = filter($post['password']);
   $query = "SELECT `username`, `password` FROM `user` WHERE username = '$username'";
@@ -182,8 +190,14 @@ function login($post) {
     // cek password
     $verify = password_verify($password, $result['password']);
     if ($verify) {
-      return 'Selamat Anda Berhasil Login';
+      return [
+        'status' => 'success',
+        'message' => 'Selamat Anda Berhasil Login',
+        'password' => $result['password'],
+        'username' => $username
+      ];
     }
   }
   return 'Username / Password Salah!';
-} 
+}
+
