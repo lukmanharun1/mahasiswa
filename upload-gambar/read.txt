@@ -1,0 +1,2 @@
+tempat upload gambar saat tambah data mahasiswa / ubah / hapus
+logic di file functions.php
