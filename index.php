@@ -2,10 +2,7 @@
 session_start();
 require_once 'functions.php';
 // session auth 
-if (!$_SESSION['auth']) {
-  redirect('login');
-  exit;
-} else if (isset($_COOKIE['remember-me']) && isset($_COOKIE['username'])) {
+if (isset($_SESSION['auth']) && isset($_COOKIE['remember-me']) && isset($_COOKIE['username'])) {
   // verifikasi remember me
   $password = filter($_COOKIE['remember-me']);
   $username = filter($_COOKIE['username']);
@@ -49,23 +46,7 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
     <div class="mx-3">
       <div class="row">
         <div class="col-md-3">
-          <div class="user">
-            <!-- icon person -->
-            <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" width="25" fill="rgb(13 110 253)">
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
-            Selamat Datang, <b class="text-primary"><?= $username ? $username : '' ?> &nbsp;</b>
-            <a href="login.php/logout" class="text-danger">Logout</a>
-          </div>
-          <button type="button" class="btn btn-primary mt-4 mb-3 tombol-tambah" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 0 24 24" width="28" fill="#fff">
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-          </svg>
-            Tambah Data Mahasiswa
-          </button>
-          <div class="cari-data position-relative">
+        <div class="cari-data position-relative">
             <input 
               type="text" 
               class="form-control mb-4 search" 
@@ -79,12 +60,32 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
               </path>
             </svg>
           </div>
+          <div class="user">
+            <!-- tombol tambah -->
+            <button type="button" class="btn btn-primary mb-3 tombol-tambah" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 0 24 24" width="28" fill="#fff">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              </svg>
+              Tambah Data Mahasiswa
+            </button>
+            <!-- icon person -->
+            <div class="icon-person">
+              <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" width="25" fill="rgb(13 110 253)">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+              </svg>
+              Selamat Datang, <b class="text-primary"><?= $username ? $username : '' ?> &nbsp;</b>
+              <a href="login.php/logout" class="text-danger">Logout</a>
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>
     <!-- notification -->
     <?php if (isset($notification)) : ?>
-      <div class="col-md-5 position-absolute" style="right: 3%; top: 13%;">
+      <div class="col-md-5 position-absolute" style="right: 2%; top: 17%;">
         <div class="alert alert-success  alert-dismissible fade show" role="alert">
           <?= $notification; ?>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

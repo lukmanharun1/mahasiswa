@@ -20,7 +20,6 @@ if (isset($_POST['login'])) {
     $tujuhHari = time() + 60 * 60 * 24 * 7;
         if ($_POST['remember-me']) {
         setcookie('remember-me', $login['password'], $tujuhHari);
-        echo 'ok';
       }
       setcookie('username', $login['username'], $tujuhHari);
     $message = $login['message'];

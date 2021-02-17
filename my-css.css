@@ -1,7 +1,6 @@
 .search  {
-  margin-top: -18%;
-  margin-left: 81%;
-  position: relative;
+  left: 0;
+  position: absolute;
   padding-left: 42px;
 }
 
@@ -9,7 +8,17 @@
   position: absolute;
   z-index: 2;
   top: 7px;
-  right: 8%;
+  left: 3%;
+}
+.tombol-tambah {
+  margin-top: 17%;
+}
+.icon-person {
+  margin-top: 5%;
+  margin-left: 5%;
+  position: absolute;
+  top: 10%;
+  left: 15%;
 }
 
 div.notification {

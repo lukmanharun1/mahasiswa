@@ -147,7 +147,7 @@ function update($post, $uploadGambar = []) {
 function daftar($post) {
   if (!isset($post['username']) && !isset($post['password']) && !isset($post['konfirmasi-password'])) {
     return 'Pastikan Semua Data Wajib diisi';
-  } else if ($post['username'] < 6) {
+  } else if (strlen($post['username']) < 6) {
     return 'Username terlalu pendek!';
   } else if ($post['password'] !== $post['konfirmasi-password']) {
     return 'Pastikan password dengan konfirmasi password harus sama';
