@@ -2,7 +2,7 @@
 session_start();
 require_once 'functions.php';
 // session auth 
-if (isset($_SESSION['auth']) && isset($_COOKIE['remember-me']) && isset($_COOKIE['username'])) {
+if (isset($_SESSION['auth']) && isset($_COOKIE['remember-me']) || isset($_COOKIE['username'])) {
   // verifikasi remember me
   $password = filter($_COOKIE['remember-me']);
   $username = filter($_COOKIE['username']);
