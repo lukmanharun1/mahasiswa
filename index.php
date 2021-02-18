@@ -4,15 +4,17 @@ require_once 'functions.php';
 
 // session auth 
 if (!isset($_SESSION['auth']) && !isset($_COOKIE['remember-me']) || !isset($_COOKIE['username'])) {
-  // verifikasi remember me
-  $password = filter($_COOKIE['remember-me']);
+  // verifikasi remember me -> username sama remember-me
   $username = filter($_COOKIE['username']);
+  $password = filter($_COOKIE['remember-me']);
   $query = "SELECT `username`, `password` FROM `user` WHERE `username` = '$username'";
   $result = getQuery($query)[0];
   if ($result['username'] !== $username && $result['password'] !== $password) {
     redirect('login');
     exit;
   }
+} else if (isset($_COOKIE['username'])) {
+  $username = $_COOKIE['username'];
 }
 $i = 1;
 if (isset($_POST['tambah'])) {

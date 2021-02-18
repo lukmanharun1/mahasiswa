@@ -16,6 +16,9 @@ if (isset($_POST['daftar'])) {
             alert('$daftar');
           </script>";
   }
+} else if (isset($_SESSION['auth']) && isset($_COOKIE['remember-me']) || isset($_COOKIE['username'])) {
+  redirect('index');
+  exit;
 }
 ?>
 

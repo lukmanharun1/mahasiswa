@@ -17,6 +17,9 @@ if ($logout === 'logout') {
   redirect('login');
 } else if ($logout !== '') {
   redirect('login');
+} else if (isset($_SESSION['auth']) && isset($_COOKIE['remember-me']) || isset($_COOKIE['username'])) {
+  redirect('index');
+  exit;
 }
 if (isset($_POST['login'])) {
   $login = login($_POST);
