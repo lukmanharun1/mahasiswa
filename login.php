@@ -87,7 +87,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
             Remember Me
           </label>
         </div>
-        <button type="submit" class="btn btn-primary mr-3 mt-3" name="login">Login Sekarang</button>
+        <br>
+        <button type="submit" class="btn btn-primary mr-3" name="login">Login Sekarang</button>
         <a href="daftar.php" class="text-secondary">Belum punya akun?</a>
       </form>
     </div>
