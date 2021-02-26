@@ -48,23 +48,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 }
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-  <!-- my css -->
-  <link rel="stylesheet" href="my-css.css">
-
-  <title>Halaman Admin</title>
-</head>
-
-<body>
+<?= startHTML('Halaman Admin'); ?>
   <h2 class="text-center mt-3 mb-4">Halaman Login Admin Kelola Data Mahasiswa</h2>
   <div class="row">
     <div class="col-lg-4 mx-4 mt-5">
@@ -108,6 +92,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
       </form>
     </div>
   </div>
-</body>
-
-</html>
+<!-- footer -->
+  <?php require_once 'footer.php' ?>
+<?= endHTML(); ?>

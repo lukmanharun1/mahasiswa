@@ -1,4 +1,4 @@
-.search  {
+.search {
   left: 0;
   position: absolute;
   padding-left: 42px;
@@ -34,4 +34,13 @@ div.notification {
 }
 .input-icon {
   padding-left: 35px;
+}
+
+footer {
+  position: fixed;
+  bottom: 2%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1.2rem;
 }
