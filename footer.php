@@ -1,3 +1,3 @@
 <footer>
-  &copy; <?= date('Y'); ?> Lukman harun All rights reserved <span class="text-primary fs-3 text">&hearts;</span>  <strong>Indonesia</strong>
+  <b>&copy;</b> <?= date('Y'); ?> Lukman harun All rights reserved <span class="text-primary fs-3 text">&hearts;</span> Indonesia
 </footer>
