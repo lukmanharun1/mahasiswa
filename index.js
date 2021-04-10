@@ -1,13 +1,13 @@
 // inisialisasi
-const containerModal = document.getElementsByClassName('container-modal')[0];
-const modalContent = document.getElementsByClassName('modal-content')[0];
+const containerModal = document.getElementsByClassName("container-modal")[0];
+const modalContent = document.getElementsByClassName("modal-content")[0];
 // tombol tambah
-const tombolTambah = document.getElementsByClassName('tombol-tambah')[0];
-tombolTambah.addEventListener('click', function() {
+const tombolTambah = document.getElementsByClassName("tombol-tambah")[0];
+tombolTambah.addEventListener("click", function () {
   modalContent.innerHTML = `
   <form action="" method="POST" enctype="multipart/form-data">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Tambah Data Mahasiswa <span class="text-danger">*</span></h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
@@ -44,19 +44,16 @@ tombolTambah.addEventListener('click', function() {
         </button>
       </div>
     </form>`;
-
 });
 
-
-
 // tombol update -> menggunakan event mouse
-const tombolupdate = document.addEventListener('click', event => {
+const tombolupdate = document.addEventListener("click", (event) => {
   const dataId = event.target.dataset.id;
   if (dataId) {
-    fetch(`http://localhost/mahasiswa/ajax-update.php/${dataId}`)
-      .then(response => response.text())
-      .catch(error => console.log(error))
-      .then(responseHTML => {
+    fetch(`ajax-update.php/${dataId}`)
+      .then((response) => response.text())
+      .catch((error) => console.log(error))
+      .then((responseHTML) => {
         modalContent.innerHTML = responseHTML;
       });
   }
@@ -64,13 +61,13 @@ const tombolupdate = document.addEventListener('click', event => {
 
 // cari data
 
-const inputSearch = document.getElementsByClassName('search')[0];
-const tbody = document.getElementsByTagName('tbody')[0];
-inputSearch.addEventListener('keyup', function() {
+const inputSearch = document.getElementsByClassName("search")[0];
+const tbody = document.getElementsByTagName("tbody")[0];
+inputSearch.addEventListener("keyup", function () {
   const cariData = inputSearch.value;
-  fetch('http://localhost/mahasiswa/ajax-cari.php/' + cariData)
-    .then(response => response.text())
-    .then(response => {
+  fetch("ajax-cari.php/" + cariData)
+    .then((response) => response.text())
+    .then((response) => {
       tbody.innerHTML = response;
     });
 });

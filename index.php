@@ -30,6 +30,29 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
 ?>
 
 <?= startHTML('Halaman Admin') ?>
+<style>
+  body[data-mode='dark'] {
+    background-color: rgb(57, 57, 57);
+    color: rgb(227, 227, 227);
+  }
+
+  body[data-mode='dark'] table {
+    color: rgb(227, 227, 227);
+  }
+
+  body[data-mode='light'] {
+    background-color: #eee;
+    color: inherit;
+  }
+  body[data-mode='dark'] .modal-content {
+    background-color: rgb(57, 57, 57);
+    color: rgb(227, 227, 227);
+  }
+  body[data-mode='dark'] input {
+    background-color: rgb(227, 227, 227);
+  }
+</style>
+  <?= tombolLightDark(); ?>
   <h1 class="text-center mt-3">Data Mahasiswa</h1>
   <div class="mx-3">
     <div class="row">
@@ -139,7 +162,7 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Data Mahasiswa <span class="text-danger">*</span></h5> 
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -193,4 +216,5 @@ $mahasiswa = getQuery("SELECT * FROM `mahasiswa` ORDER BY `nama` ASC");
   <!-- footer -->
   <?php require_once 'footer.php' ?>
 <?= endHTML('<script src="index.js"></script>
+            <script src="lightDark.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>'); ?>

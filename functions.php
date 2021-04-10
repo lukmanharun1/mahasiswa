@@ -11,8 +11,16 @@ function startHTML($title = '', $includeCss = '') {
     '. $includeCss .'
     <title>'. $title .'</title>
   </head>
-  <body>';
+  <body data-mode="light">';
 }
+
+function tombolLightDark() {
+  return '<div class="form-check form-switch position-absolute" style="left: 20px;">
+            <label class="form-check-label" for="lightDark">Light Mode</label>
+            <input class="form-check-input"  type="checkbox" id="lightDark">
+          </div>';
+}
+
 
 function endHTML($includeJs = '') {
   return "  $includeJs 
@@ -93,7 +101,7 @@ function verifyEmail($email)
 }
 function redirect($url)
 {
-  header('location: http://localhost/mahasiswa/' . $url . '.php');
+  header('location: http://localhost:8080/mahasiswa/' . $url . '.php');
 }
 
 function hapusFileGambar($target)

@@ -49,7 +49,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 ?>
 
 <?= startHTML('Halaman Admin'); ?>
-  <h2 class="text-center mt-3 mb-4">Halaman Login Admin Kelola Data Mahasiswa</h2>
+<style>
+  body[data-mode='dark'] {
+    background-color: rgb(57, 57, 57);
+    color: rgb(227, 227, 227);
+  }
+  body[data-mode='dark'] input {
+    background-color: rgb(227, 227, 227);
+  }
+</style>
+<?= tombolLightDark(); ?>
+  <h2 class="text-center mt-3 mb-5">Halaman Login Admin Kelola Data Mahasiswa</h2>
   <div class="row">
     <div class="col-lg-4 mx-4 mt-5">
       <img src="ilustration-login.svg" alt="ilustration" width="450" />
@@ -95,4 +105,4 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
   </div>
 <!-- footer -->
   <?php require_once 'footer.php' ?>
-<?= endHTML(); ?>
+<?= endHTML('<script src="lightDark.js"></script>'); ?>

@@ -22,7 +22,18 @@ if (isset($_POST['daftar'])) {
 }
 ?>
 <?= startHTML('Daftar Admin'); ?>
-  <h2 class="text-center mt-3 mb-4">Halaman Daftar Admin Kelola Data Mahasiswa</h2>
+<style>
+  body[data-mode='dark'] {
+    background-color: rgb(57, 57, 57);
+    color: rgb(227, 227, 227);
+  }
+
+  body[data-mode='dark'] input {
+    background-color: rgb(227, 227, 227);
+  }
+</style>
+  <?= tombolLightDark(); ?>
+  <h2 class="text-center mt-3 mb-5">Halaman Daftar Admin Kelola Data Mahasiswa</h2>
   <div class="row">
     <div class="col-lg-4 mx-4 mt-5">
       <img src="ilustration-daftar.svg" alt="ilustration" width="450" />
@@ -44,7 +55,7 @@ if (isset($_POST['daftar'])) {
         <!-- password -->
         <label for="password" class="form-label">Password</label>
         <div class="mb-3 position-relative">
-          <input type="password" class="form-control input-icon" id="password" name="password" required>
+          <input type="password" class="form-control input-icon" style="" id="password" name="password" required>
           <div class="icon-input">
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="rgb(13 110 253)">
               <path d="M0 0h24v24H0z" fill="none" />
@@ -78,4 +89,4 @@ if (isset($_POST['daftar'])) {
 
   <!-- footer -->
   <?php require_once 'footer.php' ?>
-<?= endHTML(); ?>
+<?= endHTML('<script src="lightDark.js"></script>'); ?>
