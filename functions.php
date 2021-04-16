@@ -1,6 +1,7 @@
 <?php
 
-function startHTML($title = '', $includeCss = '') {
+function startHTML($title = '', $includeCss = '')
+{
   return '<!doctype html>
   <html lang="en">
   <head>
@@ -8,13 +9,14 @@ function startHTML($title = '', $includeCss = '') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="my-css.css">
-    '. $includeCss .'
-    <title>'. $title .'</title>
+    ' . $includeCss . '
+    <title>' . $title . '</title>
   </head>
   <body data-mode="light">';
 }
 
-function tombolLightDark() {
+function tombolLightDark()
+{
   return '<div class="form-check form-switch position-absolute" style="left: 20px;">
             <label class="form-check-label" for="lightDark">Light Mode</label>
             <input class="form-check-input"  type="checkbox" id="lightDark">
@@ -22,14 +24,15 @@ function tombolLightDark() {
 }
 
 
-function endHTML($includeJs = '') {
+function endHTML($includeJs = '')
+{
   return "  $includeJs 
             </body>
           </html>";
 }
 function koneksi()
 {
-  return mysqli_connect('localhost', 'root', '', 'phpdasar');
+  return mysqli_connect('localhost', 'root', '', 'karya_tulis');
 }
 function filter($input)
 {
@@ -101,7 +104,7 @@ function verifyEmail($email)
 }
 function redirect($url)
 {
-  header('location: http://localhost:8080/mahasiswa/' . $url . '.php');
+  header('location: ' . $url . '.php');
 }
 
 function hapusFileGambar($target)
@@ -230,17 +233,18 @@ function login($post)
   $username = filter($post['username']);
   $password = filter($post['password']);
   $query = "SELECT `username`, `password` FROM `user` WHERE username = '$username'";
-  $result = getQuery($query)[0];
+  $result = getQuery($query);
+
   // cek username
   if ($result) {
 
     // cek password
-    $verify = password_verify($password, $result['password']);
+    $verify = password_verify($password, $result[0]['password']);
     if ($verify) {
       return [
         'status' => 'success',
         'message' => 'Selamat Anda Berhasil Login',
-        'password' => $result['password'],
+        'password' => $result[0]['password'],
         'username' => $username
       ];
     }
