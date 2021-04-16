@@ -102,9 +102,16 @@ function verifyEmail($email)
   }
   return false;
 }
-function redirect($url)
+function redirect($namaFile)
 {
-  header('location: ' . $url . '.php');
+  // contoh localhost
+  $serverName = $_SERVER['SERVER_NAME'];
+  // contoh /mahasiswa/function.php
+  $requestUri = $_SERVER['REQUEST_URI'];
+  // maahasiswa
+  $requestUri = explode('/', $requestUri)[1];
+  // http://localhost/mahasiswa/namaFile.php
+  header("location: http://$serverName/$requestUri/$namaFile.php");
 }
 
 function hapusFileGambar($target)
