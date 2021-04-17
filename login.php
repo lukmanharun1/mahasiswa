@@ -48,7 +48,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 }
 ?>
 
-<?= startHTML('Halaman Admin'); ?>
+<?= startHTML('Halaman Login Admin'); ?>
 <style>
   body[data-mode='dark'] {
     background-color: rgb(57, 57, 57);

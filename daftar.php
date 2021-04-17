@@ -21,7 +21,7 @@ if (isset($_POST['daftar'])) {
   exit;
 }
 ?>
-<?= startHTML('Daftar Admin'); ?>
+<?= startHTML('Halaman Daftar Admin'); ?>
 <style>
   body[data-mode='dark'] {
     background-color: rgb(57, 57, 57);
